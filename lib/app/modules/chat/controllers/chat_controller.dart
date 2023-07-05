@@ -1728,26 +1728,26 @@ class ChatController extends FullLifeCycleController
     }
     if (messageIds.length == selectedChatList.length) {
       clearAllChatSelection();
-      // Get.toNamed(Routes.forwardChat, arguments: {
-      //   "forward": true,
-      //   "group": false,
-      //   "groupJid": "",
-      //   "messageIds": messageIds
-      // })?.then((value) {
-      //   if (value != null) {
-      //     debugPrint(
-      //         "result of forward ==> ${(value as Profile).toJson().toString()}");
-      //     profile_.value = value;
-      //     isBlocked(profile.isBlocked);
-      //     setChatStatus();
-      //     checkAdminBlocked();
-      //     memberOfGroup();
-      //     Mirrorfly.setOnGoingChatUser(profile.jid!);
-      //     SessionManagement.setCurrentChatJID(profile.jid.checkNull());
-      //     getChatHistory();
-      //     sendReadReceipt();
-      //   }
-      // });
+      Get.toNamed(Routes.forwardChat, arguments: {
+        "forward": true,
+        "group": false,
+        "groupJid": "",
+        "messageIds": messageIds
+      })?.then((value) {
+        if (value != null) {
+          debugPrint(
+              "result of forward ==> ${(value as Profile).toJson().toString()}");
+          profile_.value = value;
+          isBlocked(profile.isBlocked);
+          setChatStatus();
+          checkAdminBlocked();
+          memberOfGroup();
+          Mirrorfly.setOnGoingChatUser(profile.jid!);
+          SessionManagement.setCurrentChatJID(profile.jid.checkNull());
+          getChatHistory();
+          sendReadReceipt();
+        }
+      });
     }
   }
 

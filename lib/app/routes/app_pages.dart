@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
-
 import '../modules/chat/bindings/chat_binding.dart';
+import '../modules/chat/bindings/forwardchat_binding.dart';
 import '../modules/chat/views/chat_view.dart';
+import '../modules/chat/views/forwardchat_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 
@@ -22,6 +23,11 @@ class AppPages {
       name: _Paths.CHAT,
       page: () => const ChatView(),
       binding: ChatBinding(),
+    ),
+    GetPage(
+      name: _Paths.forwardChat,
+      page: () => const ForwardChatView(),
+      binding: ForwardChatBinding(),
     ),
   ];
 }
