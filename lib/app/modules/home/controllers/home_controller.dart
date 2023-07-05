@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mirrorfly_plugin/flychat.dart';
 import 'package:mirrorfly_plugin/model/chat_message_model.dart';
+import 'package:mirrorfly_plugin/model/profile_update.dart';
 import 'package:mirrorfly_plugin/model/register_model.dart';
 import 'package:mirrorfly_plugin/model/user_list_model.dart';
 
@@ -13,21 +14,30 @@ import '../../../routes/app_pages.dart';
 class HomeController extends GetxController {
   // RxList<UserList> userList = RxList<UserList>([]);
   UserList? selectedUser;
+  RxBool hasData = false.obs;
   @override
   void onInit() {
     Mirrorfly.registerUser("Khilan").then((value) async {
       // you will get the user registration response
       var userData = registerModelFromJson(value);
+
       // print(value);
     }).catchError((error) {
       // Register user failed print throwable to find the exception details.
       debugPrint(error.message);
     });
-
+    Mirrorfly.updateMyProfile("Khilan", "email", 'mobile', "status", "image")
+        .then((value) {
+      var data = profileUpdateFromJson(value);
+      /* Profile image updated. Update the UI */
+    }).catchError((error) {
+      /* Error handling */
+    });
     Mirrorfly.getUserList(1, "").then((data) {
       log(data);
       var item = userListFromJson(data);
       selectedUser = item;
+      hasData.value = true;
     }).catchError((error) {});
     Mirrorfly.syncContacts(true);
     Mirrorfly.onContactSyncComplete.listen((event) {

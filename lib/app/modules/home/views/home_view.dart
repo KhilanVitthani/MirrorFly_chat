@@ -11,38 +11,44 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetWidget<HomeController> {
   const HomeView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('HomeView'),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          if (controller.selectedUser != null)
+    return Obx(() {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('HomeView'),
+          centerTitle: true,
+        ),
+        body: Column(
+          children: [
             Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  Profile profile = controller.selectedUser!.data![index];
-                  return InkWell(
-                    onTap: () {
-                      controller.toChatPage(profile.jid!);
-                    },
-                    child: ListTile(
-                      title: Text(profile.name!),
-                      subtitle: Text(profile.email!),
-                      leading: CircleAvatar(
-                        child: Text(profile.image!),
-                      ),
+              child: (controller.hasData.isFalse)
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ListView.builder(
+                      itemBuilder: (context, index) {
+                        Profile profile = controller.selectedUser!.data![index];
+                        return InkWell(
+                          onTap: () {
+                            controller.toChatPage(profile.jid!);
+                          },
+                          child: ListTile(
+                            title: Text(profile.name!),
+                            subtitle: Text(profile.email!),
+                            leading: CircleAvatar(
+                              child: Text(profile.image!),
+                            ),
+                          ),
+                        );
+                      },
+                      itemCount: controller.selectedUser!.data!.length,
                     ),
-                  );
-                },
-                itemCount: controller.selectedUser!.data!.length,
-              ),
             )
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    });
   }
 }
