@@ -18,28 +18,30 @@ class HomeView extends GetWidget<HomeController> {
         title: const Text('HomeView'),
         centerTitle: true,
       ),
-      body: InkWell(
-        onTap: () async {
-          var userJid = await Mirrorfly.getJid("Khilan");
-          Mirrorfly.sendTextMessage("message", userJid!).then((value) {
-            // you will get the message sent success response
-            log(value);
-            var chatMessage = sendMessageModelFromJson(value);
-            print("Chat User ID" + chatMessage.chatUserJid);
-            print("Sendr Id" + chatMessage.senderUserJid);
-          });
-          // Mirrorfly.getUserList(1, "").then((data) {
-          //   log(data);
-          //   var item = userListFromJson(data);
-          //   // log(item.toString());
-          // }).catchError((error) {});
-        },
-        child: const Center(
-          child: Text(
-            'HomeView is working',
-            style: TextStyle(fontSize: 20),
-          ),
-        ),
+      body: Column(
+        children: [
+          if (controller.selectedUser != null)
+            Expanded(
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  Profile profile = controller.selectedUser!.data![index];
+                  return InkWell(
+                    onTap: () {
+                      controller.toChatPage(profile.jid!);
+                    },
+                    child: ListTile(
+                      title: Text(profile.name!),
+                      subtitle: Text(profile.email!),
+                      leading: CircleAvatar(
+                        child: Text(profile.image!),
+                      ),
+                    ),
+                  );
+                },
+                itemCount: controller.selectedUser!.data!.length,
+              ),
+            )
+        ],
       ),
     );
   }
