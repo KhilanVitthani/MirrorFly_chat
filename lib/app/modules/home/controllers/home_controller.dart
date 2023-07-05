@@ -6,15 +6,18 @@ import 'package:get/get.dart';
 import 'package:mirrorfly_plugin/flychat.dart';
 import 'package:mirrorfly_plugin/model/chat_message_model.dart';
 import 'package:mirrorfly_plugin/model/profile_update.dart';
+import 'package:mirrorfly_plugin/model/recent_chat.dart';
 import 'package:mirrorfly_plugin/model/register_model.dart';
 import 'package:mirrorfly_plugin/model/user_list_model.dart';
 
 import '../../../routes/app_pages.dart';
 
 class HomeController extends GetxController {
-  // RxList<UserList> userList = RxList<UserList>([]);
+  RxList<Profile> userList = RxList<Profile>([]);
   UserList? selectedUser;
   RxBool hasData = false.obs;
+  var filteredRecentChatList = <RecentChatData>[].obs;
+
   @override
   void onInit() {
     Mirrorfly.registerUser("Khilan").then((value) async {
@@ -36,7 +39,16 @@ class HomeController extends GetxController {
     Mirrorfly.getUserList(1, "").then((data) {
       log(data);
       var item = userListFromJson(data);
-      selectedUser = item;
+      item.data!.removeWhere((element) {
+        debugPrint(
+            "filter chat list--> ${!filteredRecentChatList.indexWhere((recentChatItem) => recentChatItem.jid == element.jid.checkNull()).isNegative}");
+        return !filteredRecentChatList
+            .indexWhere((recentChatItem) =>
+                recentChatItem.jid == element.jid.checkNull())
+            .isNegative;
+      });
+      userList.addAll(item.data!);
+
       hasData.value = true;
     }).catchError((error) {});
     Mirrorfly.syncContacts(true);

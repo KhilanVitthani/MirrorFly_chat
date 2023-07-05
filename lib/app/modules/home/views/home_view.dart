@@ -29,7 +29,7 @@ class HomeView extends GetWidget<HomeController> {
                     )
                   : ListView.builder(
                       itemBuilder: (context, index) {
-                        Profile profile = controller.selectedUser!.data![index];
+                        Profile profile = controller.userList[index];
                         return InkWell(
                           onTap: () {
                             controller.toChatPage(profile.jid!);
@@ -43,7 +43,7 @@ class HomeView extends GetWidget<HomeController> {
                           ),
                         );
                       },
-                      itemCount: controller.selectedUser!.data!.length,
+                      itemCount: controller.userList.length,
                     ),
             )
           ],
