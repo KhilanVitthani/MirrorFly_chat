@@ -73,4 +73,9 @@ dev_dependencies:
 
 flutter: 
   uses-material-design: true
-
+  assets:
+    - assets/countries.txt
+    - assets/languages.txt
+    - assets/logos/
+    - assets/animation/
+    - pubspec.yaml
