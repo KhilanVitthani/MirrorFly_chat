@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:chat_mirror_fly/app/modules/home/controllers/home_controller.dart';
+import 'package:chat_mirror_fly/model/chat_message_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -12,7 +13,6 @@ import 'common/constants.dart';
 import 'common/main_controller.dart';
 import 'common/notification_service.dart';
 import 'data/session_management.dart';
-import 'model/chat_message_model.dart';
 
 abstract class BaseController {
   initListeners() {
@@ -158,10 +158,10 @@ abstract class BaseController {
       // debugPrint("basecontroller ChatController registered");
       Get.find<ChatController>().onMessageReceived(chatMessageModel);
     }
-    // if (Get.isRegistered<DashboardController>()) {
-    //   // debugPrint("basecontroller DashboardController registered");
-    //   Get.find<DashboardController>().onMessageReceived(chatMessageModel);
-    // }
+    if (Get.isRegistered<HomeController>()) {
+      // debugPrint("basecontroller DashboardController registered");
+      Get.find<HomeController>().onMessageReceived(chatMessageModel);
+    }
     // if (Get.isRegistered<ArchivedChatListController>()) {
     //   // debugPrint("basecontroller ArchivedChatListController registered");
     //   Get.find<ArchivedChatListController>().onMessageReceived(chatMessageModel);
@@ -189,9 +189,9 @@ abstract class BaseController {
     // if (Get.isRegistered<ArchivedChatListController>()) {
     //   Get.find<ArchivedChatListController>().onMessageStatusUpdated(chatMessageModel);
     // }
-    // if (Get.isRegistered<DashboardController>()) {
-    //   Get.find<DashboardController>().onMessageStatusUpdated(chatMessageModel);
-    // }
+    if (Get.isRegistered<HomeController>()) {
+      Get.find<HomeController>().onMessageStatusUpdated(chatMessageModel);
+    }
     // if (Get.isRegistered<MessageInfoController>()) {
     //   Get.find<MessageInfoController>().onMessageStatusUpdated(chatMessageModel);
     // }
@@ -235,9 +235,9 @@ abstract class BaseController {
     if (Get.isRegistered<ChatController>()) {
       Get.find<ChatController>().onGroupProfileUpdated(groupJid);
     }
-    // if (Get.isRegistered<DashboardController>()) {
-    //   Get.find<DashboardController>().onGroupProfileUpdated(groupJid);
-    // }
+    if (Get.isRegistered<HomeController>()) {
+      Get.find<HomeController>().onGroupProfileUpdated(groupJid);
+    }
     // if (Get.isRegistered<GroupInfoController>()) {
     //   Get.find<GroupInfoController>().onGroupProfileUpdated(groupJid);
     // }
@@ -278,9 +278,9 @@ abstract class BaseController {
   void onFetchingGroupMembersCompleted(groupJid) {}
 
   void onDeleteGroup(groupJid) {
-    // if (Get.isRegistered<DashboardController>()) {
-    //   Get.find<DashboardController>().onDeleteGroup(groupJid);
-    // }
+    if (Get.isRegistered<HomeController>()) {
+      Get.find<HomeController>().onDeleteGroup(groupJid);
+    }
   }
 
   void onFetchingGroupListCompleted(noOfGroups) {}
@@ -312,9 +312,9 @@ abstract class BaseController {
   void onGroupNotificationMessage(event) {
     debugPrint('onGroupNotificationMessage $event');
     ChatMessageModel chatMessageModel = sendMessageModelFromJson(event);
-    // if (Get.isRegistered<DashboardController>()) {
-    //   Get.find<DashboardController>().onMessageReceived(chatMessageModel);
-    // }
+    if (Get.isRegistered<HomeController>()) {
+      Get.find<HomeController>().onMessageReceived(chatMessageModel);
+    }
     // if (Get.isRegistered<ArchivedChatListController>()) {
     //   Get.find<ArchivedChatListController>().onMessageReceived(chatMessageModel);
     // }
@@ -324,9 +324,9 @@ abstract class BaseController {
   }
 
   void onGroupDeletedLocally(groupJid) {
-    // if (Get.isRegistered<DashboardController>()) {
-    //   Get.find<DashboardController>().onGroupDeletedLocally(groupJid);
-    // }
+    if (Get.isRegistered<HomeController>()) {
+      Get.find<HomeController>().onGroupDeletedLocally(groupJid);
+    }
   }
 
   void blockedThisUser(result) {}
@@ -353,9 +353,9 @@ abstract class BaseController {
     // if (Get.isRegistered<ForwardChatController>()) {
     //   Get.find<ForwardChatController>().onContactSyncComplete(result);
     // }
-    // if (Get.isRegistered<DashboardController>()) {
-    //   Get.find<DashboardController>().onContactSyncComplete(result);
-    // }
+    if (Get.isRegistered<HomeController>()) {
+      Get.find<HomeController>().onContactSyncComplete(result);
+    }
     // if (Get.isRegistered<ChatController>()) {
     //   Get.find<ChatController>().onContactSyncComplete(result);
     // }
@@ -411,9 +411,9 @@ abstract class BaseController {
   }
 
   void userDeletedHisProfile(String jid) {
-    // if (Get.isRegistered<DashboardController>()) {
-    //   Get.find<DashboardController>().userDeletedHisProfile(jid);
-    // }
+    if (Get.isRegistered<HomeController>()) {
+      Get.find<HomeController>().userDeletedHisProfile(jid);
+    }
     // if (Get.isRegistered<ChatController>()) {
     //   Get.find<ChatController>().userDeletedHisProfile(jid);
     // }
@@ -450,9 +450,9 @@ abstract class BaseController {
     if (Get.isRegistered<ChatController>()) {
       Get.find<ChatController>().userUpdatedHisProfile(jid);
     }
-    // if (Get.isRegistered<DashboardController>()) {
-    //   Get.find<DashboardController>().userUpdatedHisProfile(jid);
-    // }
+    if (Get.isRegistered<HomeController>()) {
+      Get.find<HomeController>().userUpdatedHisProfile(jid);
+    }
     // if (Get.isRegistered<ForwardChatController>()) {
     //   Get.find<ForwardChatController>().userUpdatedHisProfile(jid);
     // }
@@ -513,9 +513,10 @@ abstract class BaseController {
       Get.find<ChatController>()
           .setTypingStatus(singleOrgroupJid, userId, typingStatus);
     }
-    // if (Get.isRegistered<DashboardController>()) {
-    //   Get.find<DashboardController>().setTypingStatus(singleOrgroupJid, userId, typingStatus);
-    // }
+    if (Get.isRegistered<HomeController>()) {
+      Get.find<HomeController>()
+          .setTypingStatus(singleOrgroupJid, userId, typingStatus);
+    }
     // if (Get.isRegistered<ArchivedChatListController>()) {
     //   Get.find<ArchivedChatListController>()
     //       .setTypingStatus(singleOrgroupJid, userId, typingStatus);
@@ -548,7 +549,7 @@ abstract class BaseController {
         archiveSettings) {
       final String? notificationUri = SessionManagement.getNotificationUri();
       final UriAndroidNotificationSound uriSound =
-          UriAndroidNotificationSound(notificationUri!);
+          UriAndroidNotificationSound(notificationUri.checkNull());
       debugPrint("notificationUri--> $notificationUri");
 
       var messageId = chatMessageModel.messageSentTime
