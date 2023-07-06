@@ -9,6 +9,7 @@ import 'package:mirrorfly_plugin/mirrorflychat.dart';
 import 'package:get/get.dart';
 import '../../data/helper.dart';
 import 'app/modules/chat/controllers/chat_controller.dart';
+import 'app/modules/chat/controllers/forwardchat_controller.dart';
 import 'common/constants.dart';
 import 'common/main_controller.dart';
 import 'common/notification_service.dart';
@@ -184,7 +185,7 @@ abstract class BaseController {
     }
 
     if (Get.isRegistered<ChatController>()) {
-      // Get.find<ChatController>().onMessageStatusUpdated(chatMessageModel);
+      Get.find<ChatController>().onMessageStatusUpdated(chatMessageModel);
     }
     // if (Get.isRegistered<ArchivedChatListController>()) {
     //   Get.find<ArchivedChatListController>().onMessageStatusUpdated(chatMessageModel);
@@ -350,15 +351,15 @@ abstract class BaseController {
     // if (Get.isRegistered<ContactController>()) {
     //   Get.find<ContactController>().onContactSyncComplete(result);
     // }
-    // if (Get.isRegistered<ForwardChatController>()) {
-    //   Get.find<ForwardChatController>().onContactSyncComplete(result);
-    // }
+    if (Get.isRegistered<ForwardChatController>()) {
+      Get.find<ForwardChatController>().onContactSyncComplete(result);
+    }
     if (Get.isRegistered<HomeController>()) {
       Get.find<HomeController>().onContactSyncComplete(result);
     }
-    // if (Get.isRegistered<ChatController>()) {
-    //   Get.find<ChatController>().onContactSyncComplete(result);
-    // }
+    if (Get.isRegistered<ChatController>()) {
+      Get.find<ChatController>().onContactSyncComplete(result);
+    }
     // if (Get.isRegistered<ChatInfoController>()) {
     //   Get.find<ChatInfoController>().onContactSyncComplete(result);
     // }
@@ -414,9 +415,9 @@ abstract class BaseController {
     if (Get.isRegistered<HomeController>()) {
       Get.find<HomeController>().userDeletedHisProfile(jid);
     }
-    // if (Get.isRegistered<ChatController>()) {
-    //   Get.find<ChatController>().userDeletedHisProfile(jid);
-    // }
+    if (Get.isRegistered<ChatController>()) {
+      Get.find<ChatController>().userDeletedHisProfile(jid);
+    }
     // if (Get.isRegistered<ArchivedChatListController>()) {
     //   Get.find<ArchivedChatListController>().userDeletedHisProfile(jid);
     // }
@@ -426,9 +427,9 @@ abstract class BaseController {
     // if (Get.isRegistered<BlockedListController>()) {
     //   Get.find<BlockedListController>().userDeletedHisProfile(jid);
     // }
-    // if (Get.isRegistered<ForwardChatController>()) {
-    //   Get.find<ForwardChatController>().userDeletedHisProfile(jid);
-    // }
+    if (Get.isRegistered<ForwardChatController>()) {
+      Get.find<ForwardChatController>().userDeletedHisProfile(jid);
+    }
     // if (Get.isRegistered<ChatInfoController>()) {
     //   Get.find<ChatInfoController>().userDeletedHisProfile(jid);
     // }
@@ -453,9 +454,9 @@ abstract class BaseController {
     if (Get.isRegistered<HomeController>()) {
       Get.find<HomeController>().userUpdatedHisProfile(jid);
     }
-    // if (Get.isRegistered<ForwardChatController>()) {
-    //   Get.find<ForwardChatController>().userUpdatedHisProfile(jid);
-    // }
+    if (Get.isRegistered<ForwardChatController>()) {
+      Get.find<ForwardChatController>().userUpdatedHisProfile(jid);
+    }
     // if (Get.isRegistered<ArchivedChatListController>()) {
     //   Get.find<ArchivedChatListController>().userUpdatedHisProfile(jid);
     // }
